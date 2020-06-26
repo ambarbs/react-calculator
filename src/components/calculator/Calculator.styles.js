@@ -14,7 +14,7 @@ export const DisplayLabel = styled.label`
   width: 100%;
   height: 6rem;
   color: white;
-  font-size: 2rem;
+  font-size: ${props => props.fontSize};
   text-align: right;
 `;
 
@@ -28,15 +28,16 @@ export const KeyPadWrapper = styled.section`
 `;
 
 export const KeyWrapper = styled.div`
-  width: ${props => props.width || '6vw'};
-  height: 6vw;
-  border-radius: 50%;
+  width: ${props => props.width || '7vw'};
+  height: 7vw;
+  border-radius: ${props => props.borderRadius || '50%'};
   background-color: ${(props) => props.bgColor};
   color: ${(props) => props.color};
   display: flex;
   justify-content: center;
   align-items: center;
-  font-weight: bold;
+  font-weight: 400;
+  font-size: 1.5rem;
   grid-column: ${props=> props.gridColumn};
   cursor: pointer;
 `;
