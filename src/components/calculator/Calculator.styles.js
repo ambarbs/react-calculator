@@ -10,7 +10,7 @@ export const CalculatorWrapper = styled.div`
   width: 35vw;
 
   @media only screen and (max-width: 576px) {
-    width: 60vw;
+    width: 95vw;
   }
 `;
 
@@ -50,8 +50,8 @@ export const KeyWrapper = styled.div`
     grid-column: 1/span 2;
   }
   @media only screen and (max-width: 576px) {
-    width: 11vw;
-    height: 11vw;
+    width: 19vw;
+    height: 19vw;
     font-weight: 400;
     font-size: 1.25rem;
   }
