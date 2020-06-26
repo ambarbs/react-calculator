@@ -87,13 +87,8 @@ const Calculator = () => {
                         key={key.value}
                         bgColor={key.bgColor}
                         color={key.color}
-                        gridColumn={key.value === '0' ? '1 / span 2' : undefined}
-                        width={key.value === '0' ? 'auto' : '7vw'}
-                        borderRadius={key.value === '0' ? '50px' : '50%'}
                         onClick={(e) => {
-                            debugger;
                             handleClick(e);
-                            // setDisplayText(e.target.innerText)
                         }}
                     >
                         {key.value}
