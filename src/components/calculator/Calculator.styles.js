@@ -6,12 +6,7 @@ export const CalculatorWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 0.5rem;
-  width: 35vw;
-
-  @media only screen and (max-width: 576px) {
-    width: 95vw;
-  }
+  padding: 0.75rem;
 `;
 
 export const DisplayLabel = styled.label`

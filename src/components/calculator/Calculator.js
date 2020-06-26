@@ -55,7 +55,7 @@ const Calculator = () => {
                     setDisplayText(numberWithCommas(s2));
                 }
                 break;
-            case 'c':
+            case 'C':
                 setOperator('');
                 setOperand1('');
                 setOperand2('');
