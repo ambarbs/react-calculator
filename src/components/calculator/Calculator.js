@@ -59,6 +59,7 @@ const Calculator = () => {
                 setOperator('');
                 setOperand1('');
                 setOperand2('');
+                setDisplayText('');
                 break;
             default:
                 break;
