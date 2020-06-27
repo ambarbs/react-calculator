@@ -69,6 +69,11 @@ export const KeyWrapperStandard = styled(KeyWrapper)`
     width: 19vw;
     height: 19vw;
     font-weight: 400;
-    font-size: 1.25rem;
+    font-size: 1.75rem;
   }
 `;
+
+export const Icon = styled.img`
+    height: 40px;
+    width: 40px;
+`
