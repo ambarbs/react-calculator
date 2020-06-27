@@ -1,12 +1,11 @@
 import React, {useState} from "react";
 import {
     CalculatorWrapper,
-    DisplayLabel,
+    DisplayLabel, Grid,
     KeyPadWrapper,
-    KeyWrapper,
+    KeyWrapperStandard, KeyWrapperStandardScientific,
 } from "./Calculator.styles";
-import {keys, numberWithCommas, operatorMap} from "./utils";
-
+import {keys, numberWithCommas, operatorMap, scientificKeys} from "./utils";
 
 
 const Calculator = () => {
@@ -29,7 +28,7 @@ const Calculator = () => {
             case '=':
                 // eslint-disable-next-line no-eval
                 let val = Number(eval(`${operand1} ${operator} ${operand2}`));
-                val =val % 1 === 0? val : parseFloat(val.toFixed(8));
+                val = val % 1 === 0 ? val : parseFloat(val.toFixed(8));
                 setDisplayText(numberWithCommas(val));
                 setOperator('');
                 break;
@@ -44,8 +43,8 @@ const Calculator = () => {
             case '8':
             case '9':
             case '.':
-                if(value === '.' && displayText.includes('.')) return;
-                if(operator === ''){
+                if (value === '.' && displayText.includes('.')) return;
+                if (operator === '') {
                     let s1 = `${operand1}${value}`;
                     setOperand1(s1);
                     setDisplayText(numberWithCommas(s1));
@@ -82,20 +81,44 @@ const Calculator = () => {
             <DisplayLabel
                 fontSize={getFontSize(displayText)}
             >{displayText}</DisplayLabel>
-            <KeyPadWrapper>
-                {keys.map((key) => (
-                    <KeyWrapper
-                        key={key.value}
-                        bgColor={key.bgColor}
-                        color={key.color}
-                        onClick={(e) => {
-                            handleClick(e);
-                        }}
-                    >
-                        {key.value}
-                    </KeyWrapper>
-                ))}
-            </KeyPadWrapper>
+            <Grid>
+                <KeyPadWrapper rows={6} scientific>
+                    {scientificKeys.map(key => (
+                        <KeyWrapperStandardScientific
+                            // super={!!key.super || !!key.sub}
+                            key={key.value}
+                            bgColor={key.bgColor}
+                            color={key.color}
+                            onClick={(e) => {
+                                handleClick(e);
+                            }}
+                        >
+                            {!!key.super || !!key.sub ? <div>
+                                {key.super && key.superPosition === 'before' &&<sup>{key.super}</sup>}
+                                {key.value}
+                                {key.super && key.superPosition === 'after' &&<sup>{key.super}</sup>}
+                                {key.sub && <sub>{key.sub}</sub>}
+                            </div>:<div>{key.value}</div>}
+
+                        </KeyWrapperStandardScientific>
+                    ))}
+                </KeyPadWrapper>
+                <KeyPadWrapper rows={4}>
+                    {keys.map(key => (
+                        <KeyWrapperStandard
+                            key={key.value}
+                            bgColor={key.bgColor}
+                            color={key.color}
+                            onClick={(e) => {
+                                handleClick(e);
+                            }}
+                        >
+                            {key.value}
+                        </KeyWrapperStandard>
+                    ))}
+                </KeyPadWrapper>
+
+            </Grid>
         </CalculatorWrapper>
     );
 };
