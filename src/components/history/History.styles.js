@@ -15,7 +15,7 @@ export const HistoryWrapper = styled.div`
   color: black;
   width: 35vw;
   max-height: 90vh;
-  overflow-y: scroll;
+  overflow-y: auto;
   animation: ${FadeIn} forwards 2s;
   @media only screen and (max-width: 576px) {
     width: 75vw;

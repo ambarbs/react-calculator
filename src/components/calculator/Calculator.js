@@ -5,13 +5,13 @@ import {
 } from './Calculator.styles';
 import {
   evaluateExpression, getFontSize,
-  isCharADigit, isComputable,
+  isCharADigit, isComputable, numberWithCommas,
 } from './utils';
 import historyImg from '../../assets/history.svg';
 import History from '../history/History';
 import ScientificKeyPad from './keypads/ScientificKeyPad';
 import StandardKeyPad from './keypads/StandardKeyPad';
-import {scientificKeys, standardKeys} from "./constants";
+import { scientificKeys, standardKeys } from './constants';
 
 const Calculator = () => {
   const [expressionText, setExpressionText] = useState('');
@@ -41,12 +41,12 @@ const Calculator = () => {
           setExpressionText(`${items.join(' ')} ${value}`);
         }
         if (isComputable(items)) {
-          setMainDisplay(evaluateExpression(items));
+          setMainDisplay(numberWithCommas(evaluateExpression(items)));
         }
         break;
       case '=': {
         const result = evaluateExpression(items);
-        setMainDisplay(result);
+        setMainDisplay(numberWithCommas(result));
         // setExpressionText(result);
         setItems([result]);
         setHistory([...history, { displayText: expressionText, result }]);
@@ -66,11 +66,11 @@ const Calculator = () => {
           items.pop();
           const updatedLastItem = `${lastItem}${value}`;
           const spreadElements = [...items, updatedLastItem];
-          setMainDisplay(updatedLastItem);
+          setMainDisplay(numberWithCommas(updatedLastItem));
           setExpressionText(spreadElements.join(' '));
           setItems([...spreadElements]);
         } else {
-          setMainDisplay(value);
+          setMainDisplay(numberWithCommas(value));
           setExpressionText(`${items.join(' ')} ${value}`);
           setItems([...items, value]);
         }
@@ -100,7 +100,7 @@ const Calculator = () => {
           const updatedItems = [...items, updatedLastItem];
           setItems(updatedItems);
           setExpressionText(updatedItems.join(''));
-          setMainDisplay(updatedLastItem);
+          setMainDisplay(numberWithCommas(updatedLastItem));
         }
         break;
       default:
