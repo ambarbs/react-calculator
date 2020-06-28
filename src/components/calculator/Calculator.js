@@ -44,6 +44,7 @@ const Calculator = () => {
         if (isComputable(items)) {
           setMainDisplay(numberWithCommas(evaluateExpression(items)));
         }
+        if (equalPressed) setEqualPressed(false);
         break;
       case '=': {
         const result = evaluateExpression(items);
@@ -93,6 +94,7 @@ const Calculator = () => {
           setItems(updatedItems);
           setExpressionText(updatedItems.join(' '));
         }
+        if (equalPressed) setEqualPressed(false);
         break;
       case 'C':
         setExpressionText('0');
@@ -109,6 +111,7 @@ const Calculator = () => {
           setExpressionText(updatedItems.join(' '));
           setMainDisplay(numberWithCommas(updatedLastItem));
         }
+        if (equalPressed) setEqualPressed(false);
         break;
       default:
         break;
