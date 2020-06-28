@@ -8,13 +8,18 @@ export const FadeIn = keyframes`
 export const HistoryWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  position: absolute;;
+  position: absolute;
   z-index: 2;
   padding: 0.5rem;
   background-color: lightgrey;
   color: black;
-  width: 75vw;
+  width: 35vw;
+  max-height: 90vh;
+  overflow-y: scroll;
   animation: ${FadeIn} forwards 2s;
+  @media only screen and (max-width: 576px) {
+    width: 75vw;
+  }
 `;
 
 export const HistoryItem = styled.label`

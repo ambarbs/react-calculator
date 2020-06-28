@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   CalculatorWrapper,
   DisplayLabel, Grid, Icon,
-  KeyPadWrapper,
-  KeyWrapperStandard, KeyWrapperStandardScientific,
 } from './Calculator.styles';
 import {
-  evaluateExpression,
+  evaluateExpression, getFontSize,
   isCharADigit, isComputable,
-  keys, scientificKeys,
 } from './utils';
 import historyImg from '../../assets/history.svg';
 import History from '../history/History';
+import ScientificKeyPad from './keypads/ScientificKeyPad';
+import StandardKeyPad from './keypads/StandardKeyPad';
+import {scientificKeys, standardKeys} from "./constants";
 
 const Calculator = () => {
   const [expressionText, setExpressionText] = useState('');
@@ -19,6 +19,7 @@ const Calculator = () => {
   const [items, setItems] = useState(['']);
   const [history, setHistory] = useState([]);
   const [showHistory, setShowHistory] = useState(false);
+  const historyButtonRef = useRef();
 
   const handleClick = (e) => {
     const value = e.target.innerText;
@@ -107,19 +108,14 @@ const Calculator = () => {
     }
   };
 
-  const getFontSize = (text) => {
-    switch (true) {
-      case text.length < 5:
-        return '4rem';
-      case text.length < 12:
-        return '3rem';
-      default:
-        return '2rem';
-    }
-  };
-
   return (
-    <CalculatorWrapper>
+    <CalculatorWrapper
+      onClick={(event) => {
+        if (historyButtonRef.current && !historyButtonRef.current.contains(event.target)) {
+          setShowHistory(false);
+        }
+      }}
+    >
       <DisplayLabel
         fontSize="1rem"
         color="grey"
@@ -133,46 +129,15 @@ const Calculator = () => {
         {mainDisplay}
       </DisplayLabel>
       {showHistory && <History history={history} />}
-      <Icon src={historyImg} alt="history" onClick={() => setShowHistory((_showHistory) => history.length && !_showHistory)} />
+      <Icon
+        ref={historyButtonRef}
+        src={historyImg}
+        alt="history"
+        onClick={() => setShowHistory((_showHistory) => history.length && !_showHistory)}
+      />
       <Grid>
-        <KeyPadWrapper rows={6} scientific>
-          {scientificKeys.map((key) => (
-            <KeyWrapperStandardScientific
-                            // super={!!key.super || !!key.sub}
-              key={key.value}
-              bgColor={key.bgColor}
-              color={key.color}
-              onClick={(e) => {
-                handleClick(e);
-              }}
-            >
-              {!!key.super || !!key.sub ? (
-                <div>
-                  {key.super && key.superPosition === 'before' && <sup>{key.super}</sup>}
-                  {key.value}
-                  {key.super && key.superPosition === 'after' && <sup>{key.super}</sup>}
-                  {key.sub && <sub>{key.sub}</sub>}
-                </div>
-              ) : <div>{key.value}</div>}
-
-            </KeyWrapperStandardScientific>
-          ))}
-        </KeyPadWrapper>
-        <KeyPadWrapper rows={4}>
-          {keys.map((key) => (
-            <KeyWrapperStandard
-              key={key.value}
-              bgColor={key.bgColor}
-              color={key.color}
-              onClick={(e) => {
-                handleClick(e);
-              }}
-            >
-              {key.value}
-            </KeyWrapperStandard>
-          ))}
-        </KeyPadWrapper>
-
+        <ScientificKeyPad keymap={scientificKeys} onClickHandler={() => {}} />
+        <StandardKeyPad keymap={standardKeys} onClickHandler={handleClick} />
       </Grid>
     </CalculatorWrapper>
   );
