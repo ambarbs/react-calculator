@@ -19,6 +19,7 @@ const Calculator = () => {
   const [items, setItems] = useState(['']);
   const [history, setHistory] = useState([]);
   const [showHistory, setShowHistory] = useState(false);
+  const [equalPressed, setEqualPressed] = useState(false);
   const historyButtonRef = useRef();
 
   const handleClick = (e) => {
@@ -47,9 +48,9 @@ const Calculator = () => {
       case '=': {
         const result = evaluateExpression(items);
         setMainDisplay(numberWithCommas(result));
-        // setExpressionText(result);
         setItems([result]);
         setHistory([...history, { displayText: expressionText, result }]);
+        setEqualPressed(true);
         break;
       }
       case '0':
@@ -62,7 +63,12 @@ const Calculator = () => {
       case '7':
       case '8':
       case '9':
-        if (isCharADigit(lastChar) || lastChar === '.') {
+        if (equalPressed) {
+          setMainDisplay(numberWithCommas(value));
+          setExpressionText(value);
+          setItems([value]);
+          setEqualPressed(false);
+        } else if (isCharADigit(lastChar) || lastChar === '.') {
           items.pop();
           const updatedLastItem = `${lastItem}${value}`;
           const spreadElements = [...items, updatedLastItem];
@@ -82,7 +88,7 @@ const Calculator = () => {
           const spreadElements = [...items, `${lastItem}.`];
           setItems(spreadElements);
           setExpressionText(spreadElements.join(' '));
-        } else if (['+', '-', 'x', '÷'].some((sign) => lastChar === sign)) {
+        } else if (isOperator(lastChar)) {
           const updatedItems = [...items, '0.'];
           setItems(updatedItems);
           setExpressionText(updatedItems.join(' '));
