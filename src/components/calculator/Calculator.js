@@ -15,8 +15,8 @@ import { scientificKeys, standardKeys } from './constants';
 
 const Calculator = () => {
   const [expressionText, setExpressionText] = useState('');
-  const [mainDisplay, setMainDisplay] = useState('');
-  const [items, setItems] = useState(['']);
+  const [mainDisplay, setMainDisplay] = useState('0');
+  const [items, setItems] = useState(['0']);
   const [history, setHistory] = useState([]);
   const [showHistory, setShowHistory] = useState(false);
   const [equalPressed, setEqualPressed] = useState(false);
@@ -33,7 +33,7 @@ const Calculator = () => {
       case 'x':
       case '÷':
       case '%':
-        if (!['+', '-', 'x', '÷'].some((sign) => lastChar === sign)) {
+        if (!isOperator(lastChar)) {
           setItems([...items, value]);
           setExpressionText(`${items.join(' ')} ${value}`);
         } else {
@@ -71,7 +71,7 @@ const Calculator = () => {
           setEqualPressed(false);
         } else if (isCharADigit(lastChar) || lastChar === '.') {
           items.pop();
-          const updatedLastItem = `${lastItem}${value}`;
+          const updatedLastItem = parseInt(`${lastItem}${value}`, 10).toString();
           const spreadElements = [...items, updatedLastItem];
           setMainDisplay(numberWithCommas(updatedLastItem));
           setExpressionText(spreadElements.join(' '));

@@ -86,14 +86,20 @@ export const evaluateExpression = (items = ['']) => {
 
 /**
  *
+ * @param char
+ * @returns {boolean}
+ */
+export const isOperator = (char) => ['+', '-', 'x', '÷', '%'].some((operator) => operator === char);
+
+/**
+ *
  * @param items
  */
 export const isComputable = (items = []) => {
-  const operators = ['+', '-', 'x', '÷', '%'];
   let operatorCount = 0;
   let isOperable = false;
   for (let i = 0; i < items.length; i += 1) {
-    if (operators.some((operator) => operator === items[i])) {
+    if (isOperator(items[i])) {
       operatorCount += 1;
       if (operatorCount >= 1) {
         isOperable = true;
@@ -103,13 +109,6 @@ export const isComputable = (items = []) => {
   }
   return isOperable;
 };
-
-/**
- *
- * @param char
- * @returns {boolean}
- */
-export const isOperator = (char) => ['+', '-', 'x', '÷', '%'].some((operator) => operator === char);
 
 /**
  *
