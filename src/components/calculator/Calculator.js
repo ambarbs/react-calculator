@@ -5,7 +5,7 @@ import {
 } from './Calculator.styles';
 import {
   evaluateExpression, getFontSize,
-  isCharADigit, isComputable, numberWithCommas,
+  isCharADigit, isComputable, isOperator, numberWithCommas,
 } from './utils';
 import historyImg from '../../assets/history.svg';
 import History from '../history/History';
@@ -89,8 +89,9 @@ const Calculator = () => {
         }
         break;
       case 'C':
-        setExpressionText('');
-        setItems(['']);
+        setExpressionText('0');
+        setItems(['0']);
+        setMainDisplay('0');
         break;
       case '+/-':
         // eslint-disable-next-line no-restricted-globals
@@ -99,7 +100,7 @@ const Calculator = () => {
           items.pop();
           const updatedItems = [...items, updatedLastItem];
           setItems(updatedItems);
-          setExpressionText(updatedItems.join(''));
+          setExpressionText(updatedItems.join(' '));
           setMainDisplay(numberWithCommas(updatedLastItem));
         }
         break;
