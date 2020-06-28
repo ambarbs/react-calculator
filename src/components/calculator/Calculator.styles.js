@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const CalculatorWrapper = styled.div`
   position: relative;
@@ -12,8 +12,8 @@ export const CalculatorWrapper = styled.div`
 
 export const DisplayLabel = styled.label`
   width: 100%;
-  height: 6rem;
-  color: white;
+  height: ${(props) => props.height || '6rem'};
+  color: ${(props) => props.color || 'white'};
   font-size: ${(props) => props.fontSize};
   text-align: right;
 `;
@@ -22,6 +22,9 @@ export const Grid = styled.div`
   display: grid;
   grid-template-columns: auto auto;
   grid-column-gap: 1rem;
+    @media only screen and (max-width: 576px) {
+    display: block;
+}
 `;
 
 export const KeyPadWrapper = styled.section`
@@ -33,17 +36,17 @@ export const KeyPadWrapper = styled.section`
   grid-gap: 1rem;
 
   @media only screen and (max-width: 576px) {
-    display: ${(props) => (props.scientific ? "none" : "grid")};
+    display: ${(props) => (props.scientific ? 'none' : 'grid')};
   }
 `;
 
 export const KeyWrapper = styled.div`
-  width: ${(props) => props.width || "4vw"};
+  width: ${(props) => props.width || '4vw'};
   height: 4vw;
-  border-radius: ${(props) => props.borderRadius || "50%"};
+  border-radius: ${(props) => props.borderRadius || '50%'};
   background-color: ${(props) => props.bgColor};
   color: ${(props) => props.color};
-  display: ${(props) => (props.super ? "block" : "flex")};
+  display: ${(props) => (props.super ? 'block' : 'flex')};
   text-align: center;
   justify-content: center;
   align-items: center;
@@ -82,6 +85,6 @@ export const Icon = styled.img`
   left: 1rem;
   cursor: pointer;
   @media only screen and (max-width: 576px) {
-    top: -1rem;
+    //top: -1rem;
   }
 `;

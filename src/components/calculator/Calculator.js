@@ -14,7 +14,8 @@ import historyImg from '../../assets/history.svg';
 import History from '../history/History';
 
 const Calculator = () => {
-  const [displayText, setDisplayText] = useState('');
+  const [expressionText, setExpressionText] = useState('');
+  const [mainDisplay, setMainDisplay] = useState('');
   const [items, setItems] = useState(['']);
   const [history, setHistory] = useState([]);
   const [showHistory, setShowHistory] = useState(false);
@@ -32,22 +33,22 @@ const Calculator = () => {
       case '%':
         if (!['+', '-', 'x', '÷'].some((sign) => lastChar === sign)) {
           setItems([...items, value]);
-          setDisplayText(`${items.join('')}${value}`);
+          setExpressionText(`${items.join(' ')} ${value}`);
         } else {
           items.pop();
           setItems([...items, value]);
-          setDisplayText(`${items.join('')}${value}`);
+          setExpressionText(`${items.join(' ')} ${value}`);
         }
         if (isComputable(items)) {
-          setDisplayText(evaluateExpression(items));
+          setMainDisplay(evaluateExpression(items));
         }
         break;
       case '=': {
         const result = evaluateExpression(items);
-        setDisplayText(result);
+        setMainDisplay(result);
+        // setExpressionText(result);
         setItems([result]);
-        setHistory([...history, { displayText, result }]);
-        console.log('history = ', history);
+        setHistory([...history, { displayText: expressionText, result }]);
         break;
       }
       case '0':
@@ -62,12 +63,15 @@ const Calculator = () => {
       case '9':
         if (isCharADigit(lastChar) || lastChar === '.') {
           items.pop();
-          const spreadElements = [...items, `${lastItem}${value}`];
-          setDisplayText(spreadElements.join(''));
+          const updatedLastItem = `${lastItem}${value}`;
+          const spreadElements = [...items, updatedLastItem];
+          setMainDisplay(updatedLastItem);
+          setExpressionText(spreadElements.join(' '));
           setItems([...spreadElements]);
         } else {
+          setMainDisplay(value);
+          setExpressionText(`${items.join(' ')} ${value}`);
           setItems([...items, value]);
-          setDisplayText(`${items.join('')}${value}`);
         }
         break;
       case '.':
@@ -76,15 +80,15 @@ const Calculator = () => {
           items.pop();
           const spreadElements = [...items, `${lastItem}.`];
           setItems(spreadElements);
-          setDisplayText(spreadElements.join(''));
+          setExpressionText(spreadElements.join(' '));
         } else if (['+', '-', 'x', '÷'].some((sign) => lastChar === sign)) {
           const updatedItems = [...items, '0.'];
           setItems(updatedItems);
-          setDisplayText(updatedItems.join(''));
+          setExpressionText(updatedItems.join(' '));
         }
         break;
       case 'C':
-        setDisplayText('');
+        setExpressionText('');
         setItems(['']);
         break;
       case '+/-':
@@ -94,7 +98,8 @@ const Calculator = () => {
           items.pop();
           const updatedItems = [...items, updatedLastItem];
           setItems(updatedItems);
-          setDisplayText(updatedItems.join(''));
+          setExpressionText(updatedItems.join(''));
+          setMainDisplay(updatedLastItem);
         }
         break;
       default:
@@ -113,13 +118,19 @@ const Calculator = () => {
     }
   };
 
-  console.log('items = ', items);
   return (
     <CalculatorWrapper>
       <DisplayLabel
-        fontSize={getFontSize(displayText)}
+        fontSize="1rem"
+        color="grey"
+        height="2rem"
       >
-        {displayText}
+        {expressionText}
+      </DisplayLabel>
+      <DisplayLabel
+        fontSize={getFontSize(expressionText)}
+      >
+        {mainDisplay}
       </DisplayLabel>
       {showHistory && <History history={history} />}
       <Icon src={historyImg} alt="history" onClick={() => setShowHistory((_showHistory) => history.length && !_showHistory)} />
