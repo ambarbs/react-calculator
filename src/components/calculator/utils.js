@@ -263,3 +263,5 @@ export const isComputable = (items = []) => {
   }
   return isOperable;
 };
+
+export const isOperator = (caar) => ['+', '-', 'x', '÷', '%'].some((operator) => operator === caar);

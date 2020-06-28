@@ -87,9 +87,16 @@ const Calculator = () => {
         setDisplayText('');
         setItems(['']);
         break;
-      // case '+/-':
-      //
-      //   setDisplayText
+      case '+/-':
+        // eslint-disable-next-line no-restricted-globals
+        if (!isNaN(lastItem)) {
+          const updatedLastItem = (-1 * lastItem).toString();
+          items.pop();
+          const updatedItems = [...items, updatedLastItem];
+          setItems(updatedItems);
+          setDisplayText(updatedItems.join(''));
+        }
+        break;
       default:
         break;
     }
@@ -115,7 +122,7 @@ const Calculator = () => {
         {displayText}
       </DisplayLabel>
       {showHistory && <History history={history} />}
-      <Icon src={historyImg} alt="history" onClick={() => setShowHistory((showHistory) => !showHistory)} />
+      <Icon src={historyImg} alt="history" onClick={() => setShowHistory((_showHistory) => history.length && !_showHistory)} />
       <Grid>
         <KeyPadWrapper rows={6} scientific>
           {scientificKeys.map((key) => (
