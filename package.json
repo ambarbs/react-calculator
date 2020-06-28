@@ -2,7 +2,7 @@
   "name": "react-calculator",
   "version": "0.1.0",
   "private": true,
-  "homepage":"https://ambarbs.github.io/react-calculator/",
+  "homepage": "https://ambarbs.github.io/react-calculator/",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -38,6 +38,12 @@
     ]
   },
   "devDependencies": {
+    "eslint": "^7.3.1",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-react": "^7.20.0",
+    "eslint-plugin-react-hooks": "^4.0.4",
     "prettier": "^2.0.5"
   }
 }

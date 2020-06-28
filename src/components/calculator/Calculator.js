@@ -6,21 +6,23 @@ import {
   KeyWrapperStandard, KeyWrapperStandardScientific,
 } from './Calculator.styles';
 import {
-  isCharADigit,
-  keys, numberWithCommas, operatorMap, replaceAll, scientificKeys,
+  evaluateExpression,
+  isCharADigit, isComputable,
+  keys, scientificKeys,
 } from './utils';
 import historyImg from '../../assets/history.svg';
+import History from '../history/History';
 
 const Calculator = () => {
   const [displayText, setDisplayText] = useState('');
   const [items, setItems] = useState(['']);
   const [history, setHistory] = useState([]);
-
+  const [showHistory, setShowHistory] = useState(false);
 
   const handleClick = (e) => {
     const value = e.target.innerText;
     const lastItem = items.slice(-1)[0];
-    let lastChar = lastItem.slice(-1);
+    const lastChar = lastItem.slice(-1);
 
     switch (value) {
       case '+':
@@ -28,18 +30,23 @@ const Calculator = () => {
       case 'x':
       case '÷':
       case '%':
-        if( !['+', '-', 'x', '÷'].some( sign => lastChar === sign)){
+        if (!['+', '-', 'x', '÷'].some((sign) => lastChar === sign)) {
+          setItems([...items, value]);
+          setDisplayText(`${items.join('')}${value}`);
+        } else {
+          items.pop();
           setItems([...items, value]);
           setDisplayText(`${items.join('')}${value}`);
         }
+        if (isComputable(items)) {
+          setDisplayText(evaluateExpression(items));
+        }
         break;
       case '=': {
-        let evalExpression =  replaceAll(displayText, 'x', '*');
-         evalExpression =  replaceAll(evalExpression, '÷', '/');
-        const result = eval(evalExpression).toString();
+        const result = evaluateExpression(items);
         setDisplayText(result);
         setItems([result]);
-        setHistory([...history, evalExpression]);
+        setHistory([...history, { displayText, result }]);
         console.log('history = ', history);
         break;
       }
@@ -53,24 +60,24 @@ const Calculator = () => {
       case '7':
       case '8':
       case '9':
-        if(isCharADigit(lastChar) || lastChar === '.'){
+        if (isCharADigit(lastChar) || lastChar === '.') {
           items.pop();
-          let spreadElements = [...items, `${lastItem}${value}`];
+          const spreadElements = [...items, `${lastItem}${value}`];
           setDisplayText(spreadElements.join(''));
           setItems([...spreadElements]);
         } else {
-          setItems([...items, value])
+          setItems([...items, value]);
           setDisplayText(`${items.join('')}${value}`);
-
         }
         break;
       case '.':
-        if(!isNaN(lastItem) && !lastItem.includes('.')){
-          items.pop()
+        // eslint-disable-next-line no-restricted-globals
+        if (!isNaN(lastItem) && !lastItem.includes('.')) {
+          items.pop();
           const spreadElements = [...items, `${lastItem}.`];
           setItems(spreadElements);
           setDisplayText(spreadElements.join(''));
-        } else if(['+', '-', 'x', '÷'].some( sign => lastChar === sign)) {
+        } else if (['+', '-', 'x', '÷'].some((sign) => lastChar === sign)) {
           const updatedItems = [...items, '0.'];
           setItems(updatedItems);
           setDisplayText(updatedItems.join(''));
@@ -80,6 +87,9 @@ const Calculator = () => {
         setDisplayText('');
         setItems(['']);
         break;
+      // case '+/-':
+      //
+      //   setDisplayText
       default:
         break;
     }
@@ -96,6 +106,7 @@ const Calculator = () => {
     }
   };
 
+  console.log('items = ', items);
   return (
     <CalculatorWrapper>
       <DisplayLabel
@@ -103,8 +114,8 @@ const Calculator = () => {
       >
         {displayText}
       </DisplayLabel>
-
-      {/*<Icon src={historyImg} alt="history" />*/}
+      {showHistory && <History history={history} />}
+      <Icon src={historyImg} alt="history" onClick={() => setShowHistory((showHistory) => !showHistory)} />
       <Grid>
         <KeyPadWrapper rows={6} scientific>
           {scientificKeys.map((key) => (

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const CalculatorWrapper = styled.div`
+  position: relative;
   background-color: black;
   display: flex;
   flex-direction: column;
@@ -42,7 +43,7 @@ export const KeyWrapper = styled.div`
   border-radius: ${(props) => props.borderRadius || "50%"};
   background-color: ${(props) => props.bgColor};
   color: ${(props) => props.color};
-  display: ${props => props.super ? 'block': 'flex'};
+  display: ${(props) => (props.super ? "block" : "flex")};
   text-align: center;
   justify-content: center;
   align-items: center;
@@ -55,9 +56,9 @@ export const KeyWrapper = styled.div`
 export const KeyWrapperStandardScientific = styled(KeyWrapper)`
   font-size: 0.9rem;
   @media only screen and (max-width: 800px) {
-      font-size: 0.7rem;
+    font-size: 0.7rem;
   }
-`
+`;
 
 export const KeyWrapperStandard = styled(KeyWrapper)`
   &:nth-child(17) {
@@ -74,6 +75,13 @@ export const KeyWrapperStandard = styled(KeyWrapper)`
 `;
 
 export const Icon = styled.img`
-    height: 40px;
-    width: 40px;
-`
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  top: 0.5rem;
+  left: 1rem;
+  cursor: pointer;
+  @media only screen and (max-width: 576px) {
+    top: -1rem;
+  }
+`;
