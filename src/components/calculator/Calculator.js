@@ -71,7 +71,7 @@ const Calculator = () => {
           setEqualPressed(false);
         } else if (isCharADigit(lastChar) || lastChar === '.') {
           items.pop();
-          const updatedLastItem = parseInt(`${lastItem}${value}`, 10).toString();
+          const updatedLastItem = parseFloat(`${lastItem}${value}`).toString();
           const spreadElements = [...items, updatedLastItem];
           setMainDisplay(numberWithCommas(updatedLastItem));
           setExpressionText(spreadElements.join(' '));
