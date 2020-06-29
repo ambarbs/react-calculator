@@ -4,9 +4,9 @@ import { KeyPadWrapper, KeyWrapperStandard } from './KeyPad.styles';
 
 const StandardKeyPad = ({ keymap = [], onClickHandler }) => (
   <KeyPadWrapper rows={4}>
-    {keymap.map((key) => (
+    {keymap.map((key, index) => (
       <KeyWrapperStandard
-        key={key.value}
+        key={`${index}-${key.value}`}
         bgColor={key.bgColor}
         color={key.color}
         onClick={(e) => {

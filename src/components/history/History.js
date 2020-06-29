@@ -7,9 +7,7 @@ const History = ({ history }) => (
     {history.map((h) => (
       <>
         <HistoryItem paddingRight="1rem">
-          {h.displayText}
-          {' '}
-          =
+          {`${h.displayText} =`}
         </HistoryItem>
         <HistoryItem color="black">{h.result}</HistoryItem>
       </>

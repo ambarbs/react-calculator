@@ -4,9 +4,9 @@ import { KeyPadWrapper, KeyWrapperScientific } from './KeyPad.styles';
 
 const ScientificKeyPad = ({ keymap = [], onClickHandler }) => (
   <KeyPadWrapper rows={6} scientific>
-    {keymap.map((key) => (
+    {keymap.map((key, index) => (
       <KeyWrapperScientific
-        key={key.value}
+        key={`${index}-${key.value}`}
         bgColor={key.bgColor}
         color={key.color}
         onClick={(e) => {
