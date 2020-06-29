@@ -27,14 +27,11 @@ export const Grid = styled.div`
 }
 `;
 
-export const Icon = styled.img`
-  height: 40px;
-  width: 40px;
+export const Icon = styled.i`
   position: absolute;
   top: 0.5rem;
   left: 1rem;
-  cursor: pointer;
-  @media only screen and (max-width: 576px) {
-    //top: -1rem;
-  }
+  color: ${(props) => props.color};
+  cursor: ${(props) => props.cursor};
+  opacity: ${(props) => props.opacity};
 `;

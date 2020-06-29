@@ -1,3 +1,28 @@
+## Developer Notes
+
+### Approach
+
+1. Used _create-react_app_ to bootstrap the project.
+
+2. Used _styled-components_ to design the css and handle responsiveness(using media queries) 
+as it gives a more dynamic approach in handling css
+
+3. Standard Calculator will be shown in mobile only, i.e. any screen size of max width 576px
+
+4. Scientific key pad will be shown along with Standard keypad if screen size is more than 576px - **Layout Only**
+
+5. History feature has been implemented without being saved in local data storage
+
+6. History button will be enabled if there is any history available
+
+### Improvements
+
+1. Keep history with an expiry date
+
+2. Option to delete each history item
+
+3. Develop Scientific keypad to work
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

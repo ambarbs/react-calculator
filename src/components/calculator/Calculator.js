@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import 'font-awesome/css/font-awesome.min.css';
 import {
   CalculatorWrapper,
   DisplayLabel, Grid, Icon,
@@ -7,7 +8,6 @@ import {
   evaluateExpression, getFontSize,
   isCharADigit, isComputable, isOperator, numberWithCommas,
 } from './utils';
-import historyImg from '../../assets/history.svg';
 import History from '../history/History';
 import ScientificKeyPad from './keypads/ScientificKeyPad';
 import StandardKeyPad from './keypads/StandardKeyPad';
@@ -139,12 +139,17 @@ const Calculator = () => {
         {mainDisplay}
       </DisplayLabel>
       {showHistory && <History history={history} />}
+
       <Icon
+        color={history.length ? 'lightgrey' : 'grey'}
+        opacity={history.length ? 1 : 0.20}
+        cursor={history.length ? 'pointer' : 'not-allowed'}
         ref={historyButtonRef}
-        src={historyImg}
+        className="fa fa-history fa-2x"
         alt="history"
         onClick={() => setShowHistory((_showHistory) => history.length && !_showHistory)}
       />
+
       <Grid>
         <ScientificKeyPad keymap={scientificKeys} onClickHandler={() => {}} />
         <StandardKeyPad keymap={standardKeys} onClickHandler={handleClick} />
