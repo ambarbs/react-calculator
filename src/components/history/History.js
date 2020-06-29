@@ -7,7 +7,7 @@ const History = ({ history }) => (
   <HistoryWrapper>
     {history.map((h) => (
       <>
-        <HistoryItem paddingRight="1rem">
+        <HistoryItem paddingRight="1rem" fontSize="1.25rem">
           {`${h.displayText} =`}
         </HistoryItem>
         <HistoryItem color="black">{numberWithCommas(h.result)}</HistoryItem>

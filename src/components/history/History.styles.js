@@ -23,7 +23,7 @@ export const HistoryWrapper = styled.div`
 `;
 
 export const HistoryItem = styled.label`
-  font-size: 2rem;
+  font-size: ${(props) => props.fontSize || '2rem'};
   font-weight: 500;
   color: ${(props) => props.color || '#8B8B8B'};
   padding-top: 0.25rem;
