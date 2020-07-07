@@ -4,7 +4,7 @@ export const KeyPadWrapper = styled.section`
   display: grid;
   justify-content: center;
   width: 100%;
-  grid-template-columns: ${(props) => `repeat(${props.rows}, auto)`};
+  grid-template-columns: ${(props) => `repeat(${props.cols}, auto)`};
   grid-template-rows: repeat(5, auto);
   grid-gap: 1rem;
 

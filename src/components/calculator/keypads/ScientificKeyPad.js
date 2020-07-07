@@ -3,7 +3,7 @@ import React from 'react';
 import { KeyPadWrapper, KeyWrapperScientific } from './KeyPad.styles';
 
 const ScientificKeyPad = ({ keymap = [], onClickHandler }) => (
-  <KeyPadWrapper rows={6} scientific>
+  <KeyPadWrapper cols={6} scientific>
     {keymap.map((key, index) => (
       <KeyWrapperScientific
         key={`${index}-${key.value}`}
